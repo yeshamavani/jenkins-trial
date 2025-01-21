@@ -8,7 +8,7 @@ pipeline {
     }
     environment {
         GITHUB_CREDS = credentials('yeshamavani-ssh')
-        GIT_REPO_NAME = 'yeshamavani/jenkins-trial.git'
+        GIT_REPO_NAME = 'yeshamavani/jenkins-trial'
     }
 
     stages {
