@@ -62,22 +62,22 @@ pipeline {
             }
         }
     } 
-    // post {
-    //     always {
-    //         script {
-    //             def payload = [
-    //                 status     : currentBuild.currentResult, // SUCCESS, FAILURE, etc.
-    //                 jobName    : env.JOB_NAME,
-    //                 buildNumber: env.BUILD_NUMBER,
-    //                 tenant     : params.name,
-    //                 email      : params.email
-    //             ]
+    post {
+        always {
+            script {
+                def payload = [
+                    status     : currentBuild.currentResult, // SUCCESS, FAILURE, etc.
+                    jobName    : env.JOB_NAME,
+                    buildNumber: env.BUILD_NUMBER,
+                    tenant     : params.name,
+                    email      : params.email
+                ]
 
-    //            echo "Hello World"
-    //            echo env.BUILD_NUMBER
-    //            //sh 'node event.js'
-    //         }
-    //     }
-    // }
+               echo "Hello World"
+               echo env.BUILD_NUMBER
+               sh 'node event.js'
+            }
+        }
+    }
 }
 
