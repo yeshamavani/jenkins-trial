@@ -33,7 +33,10 @@ pipeline {
                 sh "sudo git config --global credential.helper 'cache --timeout=6000'"
                 sh "sudo git config --global user.name 'yeshamavani'"
                 sh "sudo git config --global user.email yesha.mavani@sourcefuse.com"
-                sh "sudo git remote add origin 'https://$GITHUB_CREDS@github.com/$GIT_REPO_NAME'"
+                git branch: 'master',
+                        url: 'https://github.com/yeshamavani/jenkins-trial.git',
+                        credentialsId: $GITHUB_CREDS
+              //  sh "sudo git remote add origin 'https://$GITHUB_CREDS@github.com/$GIT_REPO_NAME'"
                 sh "sudo git fetch origin"
                 sl "ls -al"
             }
