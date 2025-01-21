@@ -27,6 +27,7 @@ pipeline {
         }
         stage('Checkout Github') {
             steps {
+                 sh "sudo git remote rm origin"
                 sh "sudo git remote add origin 'https://$GITHUB_CREDS@github.com/$GIT_REPO_NAME'"
                 sh "sudo git fetch"
                 sl "ls -al"
