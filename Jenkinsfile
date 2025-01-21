@@ -25,20 +25,35 @@ pipeline {
                 }
             }
         }
+        // stage('Checkout Github') {
+        //     steps {
+        //         sh "sudo git remote rm origin"
+        //         sh "sudo git config --global credential.helper store"
+        //         sh "sudo git config --global credential.helper cache"
+        //         sh "sudo git config --global credential.helper 'cache --timeout=6000'"
+        //         sh "sudo git config --global user.name 'yeshamavani'"
+        //         sh "sudo git config --global user.email yesha.mavani@sourcefuse.com"
+        //         sh "sudo git remote add origin 'https://$GITHUB_CREDS@github.com/$GIT_REPO_NAME'"
+        //         sh "sudo git fetch origin"
+        //         sl "ls -al"
+        //     }
+        // }
         stage('Checkout Github') {
             steps {
-                sh "sudo git remote rm origin"
-                sh "sudo git config --global credential.helper store"
-                sh "sudo git config --global credential.helper cache"
-                sh "sudo git config --global credential.helper 'cache --timeout=6000'"
-                sh "sudo git config --global user.name 'yeshamavani'"
-                sh "sudo git config --global user.email yesha.mavani@sourcefuse.com"
-                git branch: 'master',
-                        url: 'https://github.com/yeshamavani/jenkins-trial.git',
-                        credentialsId: $GITHUB_CREDS
-              //  sh "sudo git remote add origin 'https://$GITHUB_CREDS@github.com/$GIT_REPO_NAME'"
-                sh "sudo git fetch origin"
-                sl "ls -al"
+                script{
+                     checkout([
+                              $class: 'GitSCM',
+                              branches: [[name: "master"]],
+                              doGenerateSubmoduleConfigurations: false,
+                              extensions: [], submoduleCfg: [],
+                              userRemoteConfigs: [[
+                                name: 'github',
+                                credentialsId: 'yeshamavani-ssh',
+                                url: "https://yeshamavani@github.com/$GIT_REPO_NAME"
+                              ]]
+                            ])
+                }
+               
             }
         }
         stage('Build') {
