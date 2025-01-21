@@ -47,6 +47,7 @@ pipeline {
                echo "Hello World"
                //echo $payload
                echo env.BUILD_NUMBER
+               sh 'node event.js'
             }
         }
     }
