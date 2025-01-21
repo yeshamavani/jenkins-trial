@@ -1,11 +1,13 @@
 pipeline {
-    agent any
-
     parameters {
         string(name: 'name', defaultValue: '', description: 'Tenant name')
         string(name: 'email', defaultValue: '', description: 'Email address')
         string(name: 'plan', defaultValue: '', description: 'Plan details (JSON string)')
     }
+    agent {label "bizbook-qa-slave"}
+    tools {
+         nodejs 'NodeJS 20.13.1'
+     }
     environment {
         GITHUB_CREDS = credentials('yeshamavani-ssh')
         GIT_REPO_NAME = 'yeshamavani/jenkins-trial.git'
@@ -59,6 +61,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'running build'
+                sh 'npm install'
             }
         }
     } 
