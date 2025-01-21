@@ -8,7 +8,7 @@ pipeline {
     }
     environment {
         GITHUB_CREDS = credentials('yeshamavani-ssh')
-        GIT_REPO_NAME = 'yeshamavani/jenkins-trial'
+        GIT_REPO_NAME = 'yeshamavani/jenkins-trial.git'
     }
 
     stages {
@@ -27,7 +27,12 @@ pipeline {
         }
         stage('Checkout Github') {
             steps {
-                 sh "sudo git remote rm origin"
+                sh "sudo git remote rm origin"
+                sh "sudo git config --global credential.helper store"
+                sh "sudo git config --global credential.helper cache"
+                sh "sudo git config --global credential.helper 'cache --timeout=6000'"
+                sh "sudo git config --global user.name 'yeshamavani'"
+                sh "sudo git config --global user.email yesha.mavani@sourcefuse.com"
                 sh "sudo git remote add origin 'https://$GITHUB_CREDS@github.com/$GIT_REPO_NAME'"
                 sh "sudo git fetch"
                 sl "ls -al"
