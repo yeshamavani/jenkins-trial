@@ -27,19 +27,6 @@ pipeline {
                 }
             }
         }
-        // stage('Checkout Github') {
-        //     steps {
-        //         sh "sudo git remote rm origin"
-        //         sh "sudo git config --global credential.helper store"
-        //         sh "sudo git config --global credential.helper cache"
-        //         sh "sudo git config --global credential.helper 'cache --timeout=6000'"
-        //         sh "sudo git config --global user.name 'yeshamavani'"
-        //         sh "sudo git config --global user.email yesha.mavani@sourcefuse.com"
-        //         sh "sudo git remote add origin 'https://$GITHUB_CREDS@github.com/$GIT_REPO_NAME'"
-        //         sh "sudo git fetch origin"
-        //         sl "ls -al"
-        //     }
-        // }
         stage('Checkout Github') {
             steps {
                 script{
@@ -68,17 +55,27 @@ pipeline {
     post {
         always {
             script {
-                def payload = [
-                    status     : currentBuild.currentResult, // SUCCESS, FAILURE, etc.
-                    jobName    : env.JOB_NAME,
-                    buildNumber: env.BUILD_NUMBER,
-                    tenant     : params.name,
-                    email      : params.email
-                ]
+                // def payload = [
+                //     status     : currentBuild.currentResult, // SUCCESS, FAILURE, etc.
+                //     jobName    : env.JOB_NAME,
+                //     buildNumber: env.BUILD_NUMBER,
+                //     tenant     : params.name,
+                //     email      : params.email
+                // ]
 
-               echo "Hello World"
-               echo env.BUILD_NUMBER
-               sh 'node event.js'
+                // Pass parameters as environment variables
+            withEnv([
+                "JOB_STATUS=${currentBuild.currentResult}",
+                "JOB_NAME=${env.JOB_NAME}",
+                "BUILD_NUMBER=${env.BUILD_NUMBER}",
+                "TENANT_NAME=${params.name}",
+                "TENANT_EMAIL=${params.email}"
+            ]) {
+                sh 'node event.js'
+            }
+            //    echo "Hello World"
+            //    echo env.BUILD_NUMBER
+            //    sh 'node event.js'
             }
         }
     }
