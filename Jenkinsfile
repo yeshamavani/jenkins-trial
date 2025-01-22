@@ -4,6 +4,7 @@ pipeline {
         string(name: 'email', defaultValue: '', description: 'Email address')
         string(name: 'plan', defaultValue: '', description: 'Plan details (JSON string)')
     }
+    agent any
     // agent {label "bizbook-qa-slave"}
     tools {
          nodejs 'NodeJS 20.13.1'
