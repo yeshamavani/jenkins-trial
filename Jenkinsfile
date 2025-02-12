@@ -51,6 +51,19 @@ pipeline {
             steps {
                 echo 'running build'
                 sh 'npm install'
+                sh 'sleep 300' 
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'running test'
+                sh 'sleep 300' 
+            }
+        }
+        stage('run') {
+            steps {
+                echo 'running run'
+                sh 'sleep 300'
             }
         }
     } 
