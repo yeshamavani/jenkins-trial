@@ -5,8 +5,8 @@ pipeline {
         string(name: 'plan', defaultValue: '', description: 'Plan details (JSON string)')
     }
     // agent any
-    // agent {label "bizbook-qa-slave"}
-    agent {label "bizbook-graviton-slave"}
+    agent {label "bizbook-qa-slave"}
+   // agent {label "bizbook-graviton-slave"}
     tools {
          nodejs 'NodeJS 20.13.1'
      }
@@ -67,22 +67,22 @@ pipeline {
             }
         }
     } 
-    post {
-        always {
-            script {
+    // post {
+    //     always {
+    //         script {
 
-                // Pass parameters as environment variables
-            withEnv([
-                "JOB_STATUS=${currentBuild.currentResult}",
-                "JOB_NAME=${env.JOB_NAME}",
-                "BUILD_NUMBER=${env.BUILD_NUMBER}",
-                "TENANT_NAME=${params.name}",
-                "TENANT_EMAIL=${params.email}"
-            ]) {
-                sh 'node event.js'
-            }
-            }
-        }
-    }
+    //             // Pass parameters as environment variables
+    //         withEnv([
+    //             "JOB_STATUS=${currentBuild.currentResult}",
+    //             "JOB_NAME=${env.JOB_NAME}",
+    //             "BUILD_NUMBER=${env.BUILD_NUMBER}",
+    //             "TENANT_NAME=${params.name}",
+    //             "TENANT_EMAIL=${params.email}"
+    //         ]) {
+    //             sh 'node event.js'
+    //         }
+    //         }
+    //     }
+    // }
 }
 
